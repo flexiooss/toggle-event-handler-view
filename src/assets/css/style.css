@@ -1,0 +1,7 @@
+.master {
+  display: flex;
+}
+
+.view_hidden {
+  display: none;
+}
