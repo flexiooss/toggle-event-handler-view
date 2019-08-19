@@ -1,11 +1,4 @@
-import {
-  e,
-  ElementEventListenerBuilder,
-  EventListenerOrderedBuilder,
-  RECONCILIATION_RULES,
-  TypeCheck
-} from '@flexio-oss/hotballoon'
-import {assertType} from '@flexio-oss/assert'
+import {EventListenerOrderedBuilder} from '@flexio-oss/hotballoon'
 import {EventDispatcher} from './EventDispatcher'
 
 const EVENT_TOGGLE = 'EVENT_TOGGLE'
@@ -19,27 +12,9 @@ export class ToggleDisplayHandler {
 
   /**
    *
-   * @param {function} clb
    * @returns {ToggleDisplayHandler}
    */
-  addEventToggle(clb) {
-    this.__dispatcher.addEventListener(
-      EventListenerOrderedBuilder
-        .listen(EVENT_TOGGLE)
-        .callback((payload) => {
-          clb(payload)
-        })
-        .build()
-    )
-    return this
-  }
-
-  /**
-   *
-   * @param {function} clb
-   * @returns {ToggleDisplayHandler}
-   */
-  addEventToggled(clb) {
+  subscribeToEventToggled(clb) {
     this.__dispatcher.addEventListener(
       EventListenerOrderedBuilder
         .listen(EVENT_TOGGLED)
@@ -53,70 +28,20 @@ export class ToggleDisplayHandler {
 
   /**
    *
-   * @param {View} context
-   * @param {View} view
-   * @returns {Element}
+   * @param context
+   * @returns {ToggleDisplayHandler}
    */
-  addViewClickZone(context, view) {
-    assertType(TypeCheck.isViewContainerBase(context),
-      'ToggleDisplayHandler.addClickZone: context should be an instance of ViewContainerBase'
-    )
-    assertType(TypeCheck.isView(view),
-      'ToggleDisplayHandler.addClickZone: view should be an instance of View'
-    )
-
-    this.addEventToggle(
-      (payload) => {
-        if (payload !== this.__display) {
+  addEventToggle(context) {
+    context(
+      EventListenerOrderedBuilder
+        .listen(EVENT_TOGGLE)
+        .callback((payload) => {
           this.__display = (payload || !this.__display)
           this.__dispatcher.dispatch(EVENT_TOGGLED, this.__display)
-        }
-      }
+        })
+        .build()
     )
-
-    return context.html(
-      e('div#toggleMaster.toggleMaster')
-        .views(view)
-        .listenEvent(ElementEventListenerBuilder.listen('click')
-          .callback((e) => {
-            this.__dispatcher.dispatch(EVENT_TOGGLE, !this.__display)
-          })
-          .build())
-        .reconciliationRules(RECONCILIATION_RULES.BYPASS_LISTENERS)
-    )
-  }
-
-  /**
-   *
-   * @param {View} context
-   * @param {View} view
-   * @returns {Element}
-   */
-  addToggleView(context, view) {
-    assertType(TypeCheck.isViewContainerBase(context),
-      'ToggleDisplayHandler.addToggleView: context should be an instance of ViewContainerBase'
-    )
-    assertType(TypeCheck.isView(view),
-      'ToggleDisplayHandler.addToggleView: view should be an instance of View'
-    )
-
-    this.addEventToggled(
-      (payload) => {
-        context.nodeRef('toggleSlave').style.display = (this.__display ? 'block' : 'none')
-      })
-    return context.html(
-      e('div#toggleSlave.toggleSlave')
-        .styles({display: (this.__display ? 'block' : 'none')})
-        .views(view)
-    )
-  }
-
-  /**
-   *
-   * @returns {string}
-   */
-  eventToggle() {
-    return EVENT_TOGGLED
+    return this
   }
 
   /**
@@ -128,10 +53,12 @@ export class ToggleDisplayHandler {
   }
 
   close() {
-    this.__dispatcher.dispatch(EVENT_TOGGLE, false)
+    this.__display = false
+    this.__dispatcher.dispatch(EVENT_TOGGLED, this.__display)
   }
 
   open() {
-    this.__dispatcher.dispatch(EVENT_TOGGLE, true)
+    this.__display = true
+    this.__dispatcher.dispatch(EVENT_TOGGLED, this.__display)
   }
 }

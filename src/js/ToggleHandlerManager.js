@@ -1,6 +1,5 @@
 import {assertType} from '@flexio-oss/assert'
-import {TypeCheck} from '@flexio-oss/hotballoon'
-import {EventToggle, ToggleDisplayHandler} from './ToggleDisplayHandler'
+import {ToggleDisplayHandler} from './ToggleDisplayHandler'
 
 export class ToggleHandlerManager {
   constructor() {
@@ -25,92 +24,74 @@ export class ToggleHandlerManager {
 
   /**
    *
-   * @param {ViewContainerBase} context
    */
-  openAll(context) {
-    assertType(TypeCheck.isViewContainerBase(context),
-      'ToggleHandlerManager.openAll: context should be an instance of ViewContainerBase'
-    )
+  openAll() {
     this.__handlerRegister.forEach((handler) => {
-      handler.open(context)
-    })
-  }
-
-  /**
-   *
-   * @param {ViewContainerBase} context
-   */
-  closeAll(context) {
-    assertType(TypeCheck.isViewContainerBase(context),
-      'ToggleHandlerManager.closeAll: context should be an instance of ViewContainerBase'
-    )
-    this.__handlerRegister.forEach((handler) => {
-      handler.close(context)
-    })
-  }
-
-  /**
-   *
-   * @param {ViewContainerBase} context
-   * @param {ToggleDisplayHandler} exclusiveHandler
-   */
-  openExclusive(context, exclusiveHandler) {
-    assertType(TypeCheck.isViewContainerBase(context),
-      'ToggleHandlerManager.openExclusive: context should be an instance of ViewContainerBase'
-    )
-    assertType(exclusiveHandler instanceof ToggleDisplayHandler,
-      'ToggleHandlerManager.openExclusive: context should be an instance of ViewContainerBase'
-    )
-    this.__handlerRegister.forEach((handler) => {
-      handler.close(context)
-    })
-    exclusiveHandler.open(context)
-  }
-
-  /**
-   *
-   * @param {ViewContainerBase} context
-   * @param {ToggleDisplayHandler} exclusiveHandler
-   */
-  closeExclusive(context, exclusiveHandler) {
-    assertType(TypeCheck.isViewContainerBase(context),
-      'ToggleHandlerManager.openExclusive: context should be an instance of ViewContainerBase'
-    )
-    assertType(exclusiveHandler instanceof ToggleDisplayHandler,
-      'ToggleHandlerManager.openExclusive: context should be an instance of ViewContainerBase'
-    )
-    this.__handlerRegister.forEach((handler) => {
-      handler.open(context)
-    })
-    exclusiveHandler.close(context)
-  }
-
-  /**
-   *
-   * @param {ViewContainerBase} context
-   */
-  toggleAll(context) {
-    assertType(TypeCheck.isViewContainerBase(context),
-      'ToggleHandlerManager.toggleAllUniformly: context should be an instance of ViewContainerBase'
-    )
-    let display = true
-    this.__handlerRegister.forEach((handler) => {
-      if (handler.isActive()) {
-        handler.close(context)
-      } else {
-        handler.open(context)
+      if (!handler.isActive()) {
+        handler.open()
       }
     })
   }
 
   /**
    *
-   * @param {ViewContainerBase} context
    */
-  toggleAllUniformly(context) {
-    assertType(TypeCheck.isViewContainerBase(context),
-      'ToggleHandlerManager.toggleAllUniformly: context should be an instance of ViewContainerBase'
+  closeAll() {
+    this.__handlerRegister.forEach((handler) => {
+      handler.close()
+    })
+  }
+
+  /**
+   *
+   * @param {ToggleDisplayHandler} exclusiveHandler
+   */
+  openExclusive(exclusiveHandler) {
+    assertType(exclusiveHandler instanceof ToggleDisplayHandler,
+      'ToggleHandlerManager.openExclusive: context should be an instance of ViewContainerBase'
     )
+    this.__handlerRegister.forEach((handler) => {
+      if (handler.isActive()) {
+        handler.close()
+      }
+    })
+    exclusiveHandler.open()
+  }
+
+  /**
+   *
+   * @param {ToggleDisplayHandler} exclusiveHandler
+   */
+  closeExclusive(exclusiveHandler) {
+    assertType(exclusiveHandler instanceof ToggleDisplayHandler,
+      'ToggleHandlerManager.openExclusive: context should be an instance of ViewContainerBase'
+    )
+    this.__handlerRegister.forEach((handler) => {
+      if (!handler.isActive()) {
+        handler.open()
+      }
+    })
+    exclusiveHandler.close()
+  }
+
+  /**
+   *
+   */
+  toggleAll() {
+    let display = true
+    this.__handlerRegister.forEach((handler) => {
+      if (handler.isActive()) {
+        handler.close()
+      } else {
+        handler.open()
+      }
+    })
+  }
+
+  /**
+   *
+   */
+  toggleAllUniformly() {
     let display = false
     this.__handlerRegister.forEach((handler) => {
       if (handler.isActive()) {
@@ -118,9 +99,9 @@ export class ToggleHandlerManager {
       }
     })
     if (display) {
-      this.closeAll(context)
+      this.closeAll()
     } else {
-      this.openAll(context)
+      this.openAll()
     }
   }
 }
