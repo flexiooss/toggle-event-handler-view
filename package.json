@@ -5,14 +5,32 @@
   "repository": "git@github.com:flexiooss/toggle-event-handler-view.git",
   "author": "Antoine Bachetti (https://github.com/Basheitan)",
   "devDependencies": {
-    "code-altimeter-js": "https://github.com/flexiooss/code-altimeter-js.git"
+    "code-altimeter-js": "https://github.com/flexiooss/code-altimeter-js.git",
+    "@flexio-oss/hotballoon-test-dummies": "1.0.0-dev"
   },
   "dependencies": {
-    "@flexio-corp/hotballoon-app-parent": "0.0.0"
+    "@flexio-corp/hotballoon-common-parent": "0.2.0-dev"
+  },
+  "peerDependencies": {
+    "@flexio-oss/hotballoon": ">0.0.0",
+    "@flexio-oss/assert": ">0.0.0",
+    "@flexio-oss/js-style-theme-interface": ">0.0.0"
   },
   "hotballoon-shed": {
     "build": {
       "builder": "webpack4"
+    },
+    "test": {
+      "tester": "code-altimeter-js",
+      "path": "src/test"
+    },
+    "browserTest": {
+      "path": "src/test/dev"
+    },
+    "generate-sources": {
+      "value-objects": {
+        "extension": ".spec"
+      }
     }
   }
 }
