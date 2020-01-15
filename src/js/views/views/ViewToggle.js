@@ -2,7 +2,7 @@ import {e, View, UIEventBuilder} from '@flexio-oss/hotballoon'
 import {viewToggleInterface} from './ViewToggleInterface'
 import {ToggleDisplayHandler} from '../../ToggleDisplayHandler'
 import {ToggleEvent} from './ToggleEvent'
-import {isBoolean, isUndefined} from '@flexio-oss/assert'
+import {assertType, isBoolean, isUndefined} from '@flexio-oss/assert'
 
 
 /**
@@ -19,6 +19,7 @@ export class ViewToggle extends viewToggleInterface(View) {
   constructor(viewContainer, styles, idPrefix, toggleHandlerManager, isActive) {
     super(viewContainer)
     this.setSynchronous()
+    console.log(isActive)
     this.__idPrefix = idPrefix
     this.__toggleHandlerManager = toggleHandlerManager
     this.__styles = styles
@@ -52,7 +53,7 @@ export class ViewToggle extends viewToggleInterface(View) {
   }
 
   dispatchToggleEvent(value) {
-
+    console.log(value)
     assertType(
       !isUndefined(value) && isBoolean(value),
       'ViewPagination:dispatchChange: `value` should not be undefined of type number'

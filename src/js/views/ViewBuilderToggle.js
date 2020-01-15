@@ -16,6 +16,7 @@ export class ViewBuilderToggle {
     this.__styles = null
     this.__idPrefix = ''
     this.__toggleHandlerManager = null
+    this.__isActive = null
   }
 
   /**
@@ -70,7 +71,7 @@ export class ViewBuilderToggle {
 
   /**
    *
-   * @param {ComponentToggle} componentToggle
+   * @param {ComponentTogglePublic} componentToggle
    * @returns {ViewBuilderToggle}
    */
   componentToggle(componentToggle) {
@@ -82,7 +83,7 @@ export class ViewBuilderToggle {
    *
    * @param {boolean} isActive
    */
-  isActive(isActive) {
+  isActiveByDefault(isActive) {
     isBoolean(isActive)
     this.__isActive = isActive
     return this

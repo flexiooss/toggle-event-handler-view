@@ -1,3 +1,4 @@
+import '../../../generated/io/package'
 import {ActionElementToggle} from './actions/ActionElementToggle'
 
 export class ComponentToggle {
@@ -6,7 +7,7 @@ export class ComponentToggle {
    * @param {ComponentContext} componentContext
    */
   constructor(componentContext) {
-    this.__componentContext= componentContext
+    this.__componentContext = componentContext
 
     this.__actionElementToggled = ActionElementToggle.create(this.__componentContext.dispatcher())
   }
