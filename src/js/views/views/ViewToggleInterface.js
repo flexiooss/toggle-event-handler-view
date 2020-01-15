@@ -7,6 +7,22 @@ export const viewToggleInterface = (Base) => {
   return class ViewToggleInterface extends Base {
     /**
      *
+     * @return {ToggleEvent}
+     */
+    on() {
+      throw new Error('should be override')
+    }
+
+    /**
+     *
+     * @param {boolean} active
+     */
+    dispatchToggleEvent(active) {
+      throw new Error('should be override')
+    }
+
+    /**
+     *
      */
     title() {
       throw new Error('should be override')

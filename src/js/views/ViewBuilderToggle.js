@@ -1,7 +1,7 @@
 import {ViewContainerParameters} from '@flexio-oss/hotballoon'
 import {ViewContainerToggle} from './ViewContainerToggle'
 import {ViewToggle} from './views/ViewToggle'
-import {isNull} from '@flexio-oss/assert'
+import {isBoolean, isNull} from '@flexio-oss/assert'
 import {ToggleHandlerManager} from '../ToggleHandlerManager'
 
 export class ViewBuilderToggle {
@@ -14,7 +14,7 @@ export class ViewBuilderToggle {
     this.__componentContext = null
     this.__parentNode = null
     this.__styles = null
-    this.__idPrefix = null
+    this.__idPrefix = ''
     this.__toggleHandlerManager = null
   }
 
@@ -68,11 +68,34 @@ export class ViewBuilderToggle {
     return this
   }
 
+  /**
+   *
+   * @param {ComponentToggle} componentToggle
+   * @returns {ViewBuilderToggle}
+   */
+  componentToggle(componentToggle) {
+    this.__componentToggle = componentToggle
+    return this
+  }
+
+  /**
+   *
+   * @param {boolean} isActive
+   */
+  isActive(isActive) {
+    isBoolean(isActive)
+    this.__isActive = isActive
+    return this
+  }
+
   build() {
     if (isNull(this.__toggleHandlerManager)) {
       this.__toggleHandlerManager = new ToggleHandlerManager()
     }
-    this.__view = (viewContainer) => new ViewToggle(viewContainer, this.__styles, this.__idPrefix, this.__toggleHandlerManager)
+    if (isNull(this.__isActive)) {
+      this.__isActive = false
+    }
+    this.__view = (viewContainer) => new ViewToggle(viewContainer, this.__styles, this.__idPrefix, this.__toggleHandlerManager, this.__isActive)
     let container =  new ViewContainerToggle(
       new ViewContainerParameters(
         this.__componentContext,
@@ -80,7 +103,8 @@ export class ViewBuilderToggle {
         this.__parentNode
       ),
       this.__styles,
-      this.__view
+      this.__view,
+      this.__componentToggle.actionElementToggled()
     )
 
     container.renderAndMount()

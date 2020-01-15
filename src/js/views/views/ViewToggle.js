@@ -1,6 +1,8 @@
 import {e, View, UIEventBuilder} from '@flexio-oss/hotballoon'
 import {viewToggleInterface} from './ViewToggleInterface'
 import {ToggleDisplayHandler} from '../../ToggleDisplayHandler'
+import {ToggleEvent} from './ToggleEvent'
+import {isBoolean, isUndefined} from '@flexio-oss/assert'
 
 
 /**
@@ -12,8 +14,9 @@ export class ViewToggle extends viewToggleInterface(View) {
    * @param {ThemeStyle} styles
    * @param {string} idPrefix
    * @param {ToggleHandlerManager} toggleHandlerManager
+   * @param {boolean} isActive
    */
-  constructor(viewContainer, styles, idPrefix, toggleHandlerManager) {
+  constructor(viewContainer, styles, idPrefix, toggleHandlerManager, isActive) {
     super(viewContainer)
     this.setSynchronous()
     this.__idPrefix = idPrefix
@@ -24,7 +27,7 @@ export class ViewToggle extends viewToggleInterface(View) {
     this.__idContent = `${this.__idPrefix}-content`
     this.__idArrow = `arrow-${this.__idPrefix}`
 
-    this.__toggleDisplayHandler = new ToggleDisplayHandler(true)
+    this.__toggleDisplayHandler = new ToggleDisplayHandler(isActive)
       .addEventToggle((a) => { this._on(a) })
       .subscribeToEventToggled((payload) => {
         if (payload) {
@@ -37,6 +40,28 @@ export class ViewToggle extends viewToggleInterface(View) {
       })
     this.__toggleHandlerManager.addToggleHandler(this.__toggleDisplayHandler)
 
+  }
+
+  /**
+   * @returns {ToggleEvent}
+   */
+  on() {
+    return new ToggleEvent(a => {
+      return this._on(a)
+    })
+  }
+
+  dispatchToggleEvent(value) {
+
+    assertType(
+      !isUndefined(value) && isBoolean(value),
+      'ViewPagination:dispatchChange: `value` should not be undefined of type number'
+    )
+
+    this.dispatch(
+      ToggleEvent.TOGGLE(),
+      value
+    )
   }
 
   template() {
@@ -58,6 +83,7 @@ export class ViewToggle extends viewToggleInterface(View) {
               )
               .listenEvent(UIEventBuilder.mouseEvent().click((e) => {
                 this.dispatch('EVENT_TOGGLE', null)
+                this.dispatchToggleEvent(this.__toggleDisplayHandler.isActive())
               }))
           ),
           this.html(
