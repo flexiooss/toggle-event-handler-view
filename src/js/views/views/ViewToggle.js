@@ -88,12 +88,23 @@ export class ViewToggle extends viewToggleInterface(View) {
               }))
           ),
           this.html(
-            e(`div#${this.__idContent}`)
-              .properties({ariaHidden: this.__toggleDisplayHandler.isActive()})
-              .styles({
-                display: (this.__toggleDisplayHandler.isActive() ? 'block' : 'none'),
-                visibility: (this.__toggleDisplayHandler.isActive() ? 'visible' : 'hidden')
-              })
+            e(`div#content`)
+              .className(this.__styles.layout().row())
+              .childNodes(
+                this.html(
+                  e(`div#indentation`)
+                    .className(this.__styles.layout().column(), this.__styles.layout().desktopWidth().w1(), this.__styles.layout().tabletWidth().w1(), this.__styles.layout().mobileWidth().w1())
+                ),
+                this.html(
+                  e(`div#${this.__idContent}`)
+                    .className(this.__styles.layout().column(), this.__styles.layout().desktopWidth().w23(), this.__styles.layout().tabletWidth().w23(), this.__styles.layout().mobileWidth().w23())
+                    .properties({ariaHidden: this.__toggleDisplayHandler.isActive()})
+                    .styles({
+                      display: (this.__toggleDisplayHandler.isActive() ? 'block' : 'none'),
+                      visibility: (this.__toggleDisplayHandler.isActive() ? 'visible' : 'hidden')
+                    })
+                )
+              )
           )
         )
     )
