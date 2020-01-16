@@ -5,16 +5,21 @@ import {ComponentToggle} from './ComponentToggle'
 
 export class ComponentToggleBuilder {
   constructor() {
-    this.__componentContext = null
+    /**
+     *
+     * @type {HotBalloonApplication}
+     * @private
+     */
+    this.__application = null
   }
 
   /**
-   * @param {ComponentContext} value
+   * @param {HotBalloonApplication} application
    * @return {ComponentToggleBuilder}
    */
-  componentContext(value) {
-    TypeCheck.isComponentContext(value)
-    this.__componentContext = value
+  application(application) {
+    TypeCheck.isHotballoonApplication(application)
+    this.__application = application
     return this
   }
 
@@ -22,10 +27,10 @@ export class ComponentToggleBuilder {
    * @return {ComponentTogglePublic}
    */
   build() {
-    assertType(!isNull(this.__componentContext), 'componentContext node should be set')
+    assertType(!isNull(this.__application), 'application node should be set')
     return new ComponentTogglePublic(
       new ComponentToggle(
-        this.__componentContext
+        this.__application.addComponentContext()
       )
     )
   }

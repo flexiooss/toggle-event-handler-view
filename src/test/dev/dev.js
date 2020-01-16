@@ -11,7 +11,7 @@ const viewLogOptions = {
 const applicationDev = ApplicationWithStyleAndLayers.withConsoleLogger(document.body)
 
 let componentContext = applicationDev.application().addComponentContext()
-let component = new ComponentToggleBuilder().componentContext(componentContext).build()
+let component = new ComponentToggleBuilder().application(applicationDev.application()).build()
 
 const view = new ViewBuilderToggle()
   .componentContext(componentContext)
@@ -32,4 +32,5 @@ component.actionElementToggled().listenWithCallback((e) => {
 
 view.title().innerHTML = 'title'
 view.content().innerHTML = 'content'
+
 

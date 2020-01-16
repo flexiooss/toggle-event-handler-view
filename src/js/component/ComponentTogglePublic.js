@@ -20,4 +20,8 @@ export class ComponentTogglePublic {
     return this[__componentToggle].actionElementToggled()
   }
 
+  remove() {
+    this[__componentToggle].remove()
+  }
+
 }
