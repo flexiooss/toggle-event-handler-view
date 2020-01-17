@@ -2,6 +2,9 @@ import {ViewBuilderToggle} from '../../js/views/ViewBuilderToggle'
 import {ApplicationWithStyleAndLayers} from '@flexio-oss/hotballoon-test-dummies/src/js/ApplicationWithStyleAndLayers'
 import {ToggleHandlerManager} from '../../js/ToggleHandlerManager'
 import {ComponentToggleBuilder} from '../../js/component/ComponentToggleBuilder'
+import {ViewToggleMounter} from '../../js/views/ViewToggleMounter/ViewToggleMounter'
+import {ViewBuilders, ViewToggleMounterConfig} from '../../js/views/ViewToggleMounter/ViewToggleMounterConfig'
+import {FlexioIconsTheme} from '@flexio-corp/flexio-icone-theme'
 
 const viewLogOptions = {
   color: '#e2183e',
@@ -13,14 +16,18 @@ const applicationDev = ApplicationWithStyleAndLayers.withConsoleLogger(document.
 let componentContext = applicationDev.application().addComponentContext()
 let component = new ComponentToggleBuilder().application(applicationDev.application()).build()
 
-const view = new ViewBuilderToggle()
-  .componentContext(componentContext)
-  .componentToggle(component)
-  .idPrefix('prefix')
-  .parentNode(applicationDev.layersComponent().addLayer().getElement())
-  .styles(applicationDev.styles())
-  .toggleHandlerManager(new ToggleHandlerManager())
-  .build()
+const view = new ViewToggleMounter()
+  .buildView(new ViewToggleMounterConfig()
+    .componentContext(componentContext)
+    .componentToggle(component)
+    .parentNode(applicationDev.layersComponent().addLayer().getElement())
+    .idPrefix('prefix')
+    .styles(applicationDev.styles())
+    .icons(new FlexioIconsTheme(applicationDev.styles().color()))
+    .toggleHandlerManager(new ToggleHandlerManager())
+    .view(ViewBuilders.viewToggle())
+    .isActive(false)
+  ).viewContainer()
 
 component.actionElementToggled().listenWithCallback((e) => {
   componentContext.logger().log(

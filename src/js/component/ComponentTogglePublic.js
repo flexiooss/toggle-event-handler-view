@@ -23,5 +23,11 @@ export class ComponentTogglePublic {
   remove() {
     this[__componentToggle].remove()
   }
-
 }
+
+/**
+ *
+ * @param instance
+ * @return {boolean}
+ */
+export const isComponentTogglePublic = (instance) => instance instanceof ComponentTogglePublic

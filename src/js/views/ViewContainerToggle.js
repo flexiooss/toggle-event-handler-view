@@ -11,14 +11,23 @@ export class ViewContainerToggle extends ViewContainer {
    *
    * @param {ViewContainerParameters} viewContainerParameters
    * @param {ThemeStyle} styles
+   * @param {Iconist} icons
    * @param {Function} view
    * @param {ActionDispatcher<ElementToggle, ElementToggleBuilder>} actionEventToggled
+   * @param {string} idPrefix
+   * @param {ToggleHandlerManager} toggleHandlerManager
+   * @param {boolean} isActive
    */
-  constructor(viewContainerParameters, styles, view, actionEventToggled) {
+  constructor(viewContainerParameters, styles, icons, view, actionEventToggled, idPrefix, toggleHandlerManager, isActive) {
     super(viewContainerParameters)
 
     this.__styles = styles
-    this.__view = view(this)
+    this.__icons = icons
+    this.__actionEventToggled = actionEventToggled
+    this.__idPrefix = idPrefix
+    this.__toggleHandlerManager = toggleHandlerManager
+    this.__isActive = isActive
+    this.__view = view(this , this.__styles, this.__icons, this.__idPrefix, this.__toggleHandlerManager, this.__isActive)
     this.__actionEventToggled = actionEventToggled
 
     assertType(implementsViewToggleInterface(this.__view),
