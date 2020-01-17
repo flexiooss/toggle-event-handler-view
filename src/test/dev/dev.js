@@ -1,4 +1,3 @@
-import {ViewBuilderToggle} from '../../js/views/ViewBuilderToggle'
 import {ApplicationWithStyleAndLayers} from '@flexio-oss/hotballoon-test-dummies/src/js/ApplicationWithStyleAndLayers'
 import {ToggleHandlerManager} from '../../js/ToggleHandlerManager'
 import {ComponentToggleBuilder} from '../../js/component/ComponentToggleBuilder'

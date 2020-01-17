@@ -12,14 +12,18 @@ let component = new ComponentToggleBuilder()
 - build View
 
 ```javascript
-const view = new ViewBuilderToggle()
-  .componentContext(componentContext)
-  .componentToggle(component)
-  .idPrefix('prefix') // to personalize dom
-  .parentNode(parentNode)
-  .styles(styles)
-  .toggleHandlerManager(new ToggleHandlerManager())
-  .build()
+const viewContainer = new ViewToggleMounter()
+  .buildView(new ViewToggleMounterConfig()
+      .componentContext(componentContext)
+      .componentToggle(component)
+      .parentNode(parentNode)
+      .idPrefix('prefix') // to personalize dom
+      .styles(styles)
+      .icons(icons)
+      .toggleHandlerManager(new ToggleHandlerManager())
+      .view(ViewBuilders.viewToggle())
+      .isActive(false)
+  ).viewContainer()
   ```
 
 

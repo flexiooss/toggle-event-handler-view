@@ -1,5 +1,5 @@
 export { ToggleHandlerManager } from './src/js/ToggleHandlerManager'
 export { ToggleDisplayHandler } from './src/js/ToggleDisplayHandler'
 export { ViewToggleMounter } from './src/js/views/ViewToggleMounter/ViewToggleMounter'
-export { ViewToggleMounterConfig } from './src/js/views/ViewToggleMounter/ViewToggleMounterConfig'
+export { ViewToggleMounterConfig, ViewBuilders } from './src/js/views/ViewToggleMounter/ViewToggleMounterConfig'
 export { ComponentToggleBuilder } from './src/js/component/ComponentToggleBuilder'
