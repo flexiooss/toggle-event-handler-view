@@ -40,18 +40,18 @@ export class ViewToggle extends viewToggleInterface(View) {
 
     this.__currentIsActive = this.__isActive
     this.__toggleDisplayHandler.subscribeToEventToggled((payload) => {
-        if (payload) {
-          if (!this.__currentIsActive) {
-            this.nodeRef(this.__idArrow).style.transform = 'rotate(0.25turn)'
-          }
-        } else {
-            if (!this.__currentIsActive) {
-              this.nodeRef(this.__idArrow).style.transform = 'rotate(0turn)'
-            }
+      if (payload) {
+        if (!this.__currentIsActive) {
+          this.nodeRef(this.__idArrow).style.transform = 'rotate(0.25turn)'
         }
-        this.nodeRef(this.__idContent).style.display = (this.__toggleDisplayHandler.isActive() ? 'block' : 'none')
-        this.nodeRef(this.__idContent).style.visibility = (this.__toggleDisplayHandler.isActive() ? 'visible' : 'hidden')
-      })
+      } else {
+        if (!this.__currentIsActive) {
+          this.nodeRef(this.__idArrow).style.transform = 'rotate(0turn)'
+        }
+      }
+      this.nodeRef(this.__idContent).style.display = (this.__toggleDisplayHandler.isActive() ? 'block' : 'none')
+      this.nodeRef(this.__idContent).style.visibility = (this.__toggleDisplayHandler.isActive() ? 'visible' : 'hidden')
+    })
     this.__toggleHandlerManager.addToggleHandler(this.__toggleDisplayHandler)
   }
 
@@ -85,9 +85,14 @@ export class ViewToggle extends viewToggleInterface(View) {
             e(`div#${this.__idTitle}`)
               .className(this.__styles.layout().row(), this.__styles.layout().rowAlignCenter())
               .childNodes(
-                this.__icons.applyTo(this.__iconArrowContainer).triangle().small().dark(),
+                this.html(
+                  e(`div#arrowContainer`)
+                    .className(this.__styles.layout().mobileWidth().w1())
+                    .childNodes(this.__icons.applyTo(this.__iconArrowContainer).triangle().small().dark())
+                ),
                 this.html(
                   e(`div#${this.__idTitleContent}`)
+                    .className(this.__styles.layout().mobileWidth().w23())
                 )
               )
               .listenEvent(UIEventBuilder.mouseEvent().click((e) => {

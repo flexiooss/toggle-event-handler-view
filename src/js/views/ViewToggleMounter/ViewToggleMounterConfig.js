@@ -240,7 +240,7 @@ export class ViewToggleMounterConfig {
   }
 }
 
-export class ViewBuilders {
+export class ViewToggleBuilders {
   /**
    *
    * @returns {function(ViewContainer, ThemeStyle, Iconist, string, ToggleHandlerManager, boolean): ViewToggleInterface}
