@@ -129,7 +129,7 @@ export class ViewToggleMounterConfig {
 
   /**
    *
-   * @param {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface} view
+   * @param {function(ViewContainer, ThemeStyle, Iconist, string, ToggleHandlerManager, boolean): ViewToggleInterface} view
    * @returns {ViewToggleMounterConfig}
    */
   view(view) {
