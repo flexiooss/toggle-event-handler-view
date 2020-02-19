@@ -19,7 +19,6 @@ const viewContainer = new ViewToggleMounter()
       .parentNode(parentNode)
       .idPrefix('prefix') // to personalize dom
       .styles(styles)
-      .icons(icons)
       .toggleHandlerManager(new ToggleHandlerManager())
       .view(ViewBuilders.viewToggle())
       .isActive(false)

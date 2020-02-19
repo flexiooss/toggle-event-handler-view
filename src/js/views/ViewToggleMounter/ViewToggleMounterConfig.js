@@ -38,13 +38,6 @@ export class ViewToggleMounterConfig {
 
     /**
      *
-     * @type {Iconist}
-     * @private
-     */
-    this.__icons = null
-
-    /**
-     *
      * @type {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface}
      * @private
      */
@@ -118,18 +111,7 @@ export class ViewToggleMounterConfig {
 
   /**
    *
-   * @param {Iconist} icons
-   * @returns {ViewToggleMounterConfig}
-   */
-  icons(icons) {
-    isIconist(icons)
-    this.__icons = icons
-    return this
-  }
-
-  /**
-   *
-   * @param {function(ViewContainer, ThemeStyle, Iconist, string, ToggleHandlerManager, boolean): ViewToggleInterface} view
+   * @param {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface} view
    * @returns {ViewToggleMounterConfig}
    */
   view(view) {
@@ -203,10 +185,6 @@ export class ViewToggleMounterConfig {
     return this.__styles
   }
 
-  getIcons() {
-    return this.__icons
-  }
-
   /**
    *
    * @returns {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface}
@@ -243,9 +221,9 @@ export class ViewToggleMounterConfig {
 export class ViewToggleBuilders {
   /**
    *
-   * @returns {function(ViewContainer, ThemeStyle, Iconist, string, ToggleHandlerManager, boolean): ViewToggleInterface}
+   * @returns {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface}
    */
   static viewToggle() {
-    return (viewContainer, styles, icons, idPrefix, toggleHandlerManager, isActive) => new ViewToggle(viewContainer, styles, icons, idPrefix, toggleHandlerManager, isActive)
+    return (viewContainer, styles, idPrefix, toggleHandlerManager, isActive) => new ViewToggle(viewContainer, styles, idPrefix, toggleHandlerManager, isActive)
   }
 }

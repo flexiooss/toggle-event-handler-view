@@ -30,7 +30,6 @@ export class ViewToggleMounter {
         viewMounterConfig.getParentNode()
       ),
       viewMounterConfig.getStyles(),
-      viewMounterConfig.getIcons(),
       viewMounterConfig.getView(),
       viewMounterConfig.getActionEventToggled(),
       viewMounterConfig.getIDPrefix(),

@@ -12,18 +12,16 @@ export class ViewToggle extends viewToggleInterface(View) {
   /**
    * @param {ViewContainer} viewContainer
    * @param {ThemeStyle} styles
-   * @param {Iconist} icons
    * @param {string} idPrefix
    * @param {ToggleHandlerManager} toggleHandlerManager
    * @param {boolean} isActive
    */
-  constructor(viewContainer, styles, icons, idPrefix, toggleHandlerManager, isActive) {
+  constructor(viewContainer, styles, idPrefix, toggleHandlerManager, isActive) {
     super(viewContainer)
     this.setSynchronous()
     this.__idPrefix = idPrefix
     this.__toggleHandlerManager = toggleHandlerManager
     this.__styles = styles
-    this.__icons = icons
     this.__idTitle = `${this.__idPrefix}-title`
     this.__idTitleContent = `${this.__idTitle}-content`
     this.__idContent = `${this.__idPrefix}-content`
@@ -88,7 +86,7 @@ export class ViewToggle extends viewToggleInterface(View) {
                 this.html(
                   e(`div#arrowContainer`)
                     .className(this.__styles.layout().mobileWidth().w1())
-                    .childNodes(this.__icons.applyTo(this.__iconArrowContainer).triangle().small().dark())
+                    .childNodes(this.__styles.icons().applyTo(this.__iconArrowContainer).triangle().small().dark())
                 ),
                 this.html(
                   e(`div#${this.__idTitleContent}`)

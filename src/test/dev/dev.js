@@ -2,8 +2,7 @@ import {ApplicationWithStyleAndLayers} from '@flexio-oss/hotballoon-test-dummies
 import {ToggleHandlerManager} from '../../js/ToggleHandlerManager'
 import {ComponentToggleBuilder} from '../../js/component/ComponentToggleBuilder'
 import {ViewToggleMounter} from '../../js/views/ViewToggleMounter/ViewToggleMounter'
-import {ViewBuilders, ViewToggleMounterConfig} from '../../js/views/ViewToggleMounter/ViewToggleMounterConfig'
-import {FlexioIconsTheme} from '@flexio-corp/flexio-icone-theme'
+import {ViewToggleBuilders, ViewToggleMounterConfig} from '../../js/views/ViewToggleMounter/ViewToggleMounterConfig'
 
 const viewLogOptions = {
   color: '#e2183e',
@@ -22,9 +21,8 @@ const view = new ViewToggleMounter()
     .parentNode(applicationDev.layersComponent().addLayer().getElement())
     .idPrefix('prefix')
     .styles(applicationDev.styles())
-    .icons(new FlexioIconsTheme(applicationDev.styles().color()))
     .toggleHandlerManager(new ToggleHandlerManager())
-    .view(ViewBuilders.viewToggle())
+    .view(ViewToggleBuilders.viewToggle())
     .isActive(false)
   ).viewContainer()
 
