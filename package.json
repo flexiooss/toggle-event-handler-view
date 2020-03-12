@@ -9,11 +9,11 @@
     "@flexio-oss/hotballoon-test-dummies": "1.0.0-dev"
   },
   "dependencies": {
-    "@flexio-corp/hotballoon-common-parent": "0.2.0-dev",
-    "@flexio-corp/iconist": "1.0.0-dev",
-    "@flexio-corp/flexio-icone-theme": "1.0.0-dev"
+    "@flexio-corp/component-styled-parent": "1.1.0"
   },
   "peerDependencies": {
+    "@flexio-corp/flexio-icone-theme": ">0.0.0",
+    "@flexio-corp/iconist": ">0.0.0",
     "@flexio-oss/hotballoon": ">0.0.0",
     "@flexio-oss/assert": ">0.0.0",
     "@flexio-oss/js-style-theme-interface": ">0.0.0"
