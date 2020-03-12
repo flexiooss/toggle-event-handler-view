@@ -1,4 +1,4 @@
-import {EventListenerOrderedBuilder} from '@flexio-oss/hotballoon'
+import {OrderedEventListenerConfigBuilder} from '@flexio-oss/hotballoon'
 import {EventDispatcher} from './EventDispatcher'
 
 const EVENT_TOGGLE = 'EVENT_TOGGLE'
@@ -16,7 +16,7 @@ export class ToggleDisplayHandler {
    */
   subscribeToEventToggled(clb) {
     this.__dispatcher.addEventListener(
-      EventListenerOrderedBuilder
+      OrderedEventListenerConfigBuilder
         .listen(EVENT_TOGGLED)
         .callback((payload) => {
           clb(payload)
@@ -33,7 +33,7 @@ export class ToggleDisplayHandler {
    */
   addEventToggle(context) {
     context(
-      EventListenerOrderedBuilder
+      OrderedEventListenerConfigBuilder
         .listen(EVENT_TOGGLE)
         .callback((payload) => {
           this.__display = (payload || !this.__display)

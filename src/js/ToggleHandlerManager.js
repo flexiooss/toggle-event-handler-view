@@ -78,7 +78,6 @@ export class ToggleHandlerManager {
    *
    */
   toggleAll() {
-    let display = true
     this.__handlerRegister.forEach((handler) => {
       if (handler.isActive()) {
         handler.close()

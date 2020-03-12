@@ -1,27 +1,38 @@
 {
   "name": "@flexio-oss/toggle-event-handler-view",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "index.js",
   "repository": "git@github.com:flexiooss/toggle-event-handler-view.git",
   "author": "Antoine Bachetti (https://github.com/Basheitan)",
   "devDependencies": {
-    "eslint": "^5.13.0",
-    "eslint-config-standard": "^11.0.0-beta.0",
-    "eslint-friendly-formatter": "^3.0.0",
-    "eslint-plugin-html": "^4.0.1",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "code-altimeter-js": "https://github.com/flexiooss/code-altimeter-js.git",
+    "@flexio-oss/hotballoon-test-dummies": "1.0.0-dev"
   },
   "dependencies": {
-    "@flexio-oss/hotballoon": "0.1.0-dev",
-    "@flexio-oss/assert": "0.0.0",
-    "@flexio-oss/event-handler": "0.2.0-dev"
+    "@flexio-corp/component-styled-parent": "1.1.0"
+  },
+  "peerDependencies": {
+    "@flexio-corp/flexio-icone-theme": ">0.0.0",
+    "@flexio-corp/iconist": ">0.0.0",
+    "@flexio-oss/hotballoon": ">0.0.0",
+    "@flexio-oss/assert": ">0.0.0",
+    "@flexio-oss/js-style-theme-interface": ">0.0.0"
   },
   "hotballoon-shed": {
     "build": {
       "builder": "webpack4"
+    },
+    "test": {
+      "tester": "code-altimeter-js",
+      "path": "src/test"
+    },
+    "browserTest": {
+      "path": "src/test/dev"
+    },
+    "generate-sources": {
+      "value-objects": {
+        "extension": ".spec"
+      }
     }
   }
 }
