@@ -93,7 +93,7 @@ export class ViewToggle extends viewToggleInterface(View) {
                     .className(this.__styles.layout().mobileWidth().w23())
                 )
               )
-              .listenEvent(UIEventBuilder.mouseEvent().click((e) => {
+              .listenEvent(UIEventBuilder.pointerEvent().up((e) => {
                 this.dispatch('EVENT_TOGGLE', null)
                 this.dispatchToggleEvent(this.__toggleDisplayHandler.isActive())
               }))

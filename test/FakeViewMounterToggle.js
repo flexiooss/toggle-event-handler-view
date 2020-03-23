@@ -1,15 +1,18 @@
+import {FakeViewContainerToggle} from './FakeViewContainerToggle'
+import {ViewToggleMounter} from '../src/js/views/ViewToggleMounter/ViewToggleMounter'
 
-export class FakeViewMounterToggle {
+export class FakeViewMounterToggle extends ViewToggleMounter{
   constructor(componentContext) {
+    super()
     this.componentContext = componentContext
   }
   buildView(viewMounterConfig) {
     return this
   }
   /**
-   * @return {FakeViewMounterToggle}
+   * @return {ViewContainerToggle}
    */
   viewContainer() {
-    return new FakeViewMounterToggle(this.componentContext)
+    return new FakeViewContainerToggle()
   }
 }
