@@ -13,7 +13,6 @@ export class ComponentTogglePublic {
   }
 
   /**
-   *
    * @returns {ActionDispatcher<ElementToggle, ElementToggleBuilder>}
    */
   actionElementToggled() {
@@ -24,17 +23,22 @@ export class ComponentTogglePublic {
     this[__componentToggle].remove()
   }
 
+  /**
+   * @return {Element}
+   */
   title() {
     return this[__componentToggle].title()
   }
 
+  /**
+   * @return {Element}
+   */
   content() {
     return this[__componentToggle].content()
   }
 }
 
 /**
- *
  * @param instance
  * @return {boolean}
  */

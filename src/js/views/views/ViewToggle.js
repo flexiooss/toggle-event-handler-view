@@ -121,10 +121,16 @@ export class ViewToggle extends viewToggleInterface(View) {
     )
   }
 
+  /**
+   * @return {Element}
+   */
   title() {
     return this.nodeRef(this.__idTitleContent)
   }
 
+  /**
+   * @return {Element}
+   */
   content() {
     return this.nodeRef(this.__idContent)
   }

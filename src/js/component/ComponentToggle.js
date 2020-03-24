@@ -43,11 +43,16 @@ export class ComponentToggle {
     this.__componentContext.addViewContainer(this.__viewContainer)
   }
 
+  /**
+   * @return {Element}
+   */
   title() {
-    console.log(this.__viewContainer)
     return this.__viewContainer.title()
   }
 
+  /**
+   * @return {Element}
+   */
   content() {
     return this.__viewContainer.content()
   }
