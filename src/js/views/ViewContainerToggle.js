@@ -11,7 +11,7 @@ export class ViewContainerToggle extends ViewContainer {
    *
    * @param {ViewContainerParameters} viewContainerParameters
    * @param {ThemeStyle} styles
-   * @param {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): View} view
+   * @param {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface} view
    * @param {ActionDispatcher<ElementToggle, ElementToggleBuilder>} actionEventToggled
    * @param {string} idPrefix
    * @param {ToggleHandlerManager} toggleHandlerManager

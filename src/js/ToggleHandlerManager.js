@@ -104,3 +104,10 @@ export class ToggleHandlerManager {
     }
   }
 }
+
+/**
+ *
+ * @param instance
+ * @return {boolean}
+ */
+export const isToggleHandlerManager = (instance) => instance instanceof ToggleHandlerManager

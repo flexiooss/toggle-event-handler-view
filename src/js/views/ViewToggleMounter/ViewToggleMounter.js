@@ -2,9 +2,11 @@ import {ViewToggleMounterConfig} from './ViewToggleMounterConfig'
 import {assertType} from '@flexio-oss/assert'
 import {ViewContainerParameters} from '@flexio-oss/hotballoon'
 import {ViewContainerToggle} from '../ViewContainerToggle'
+import {ViewMounter} from '@flexio-corp/js-view-common'
 
-export class ViewToggleMounter {
+export class ViewToggleMounter extends ViewMounter {
   constructor() {
+    super()
     /**
      *
      * @type {?ViewContainerToggle}
@@ -15,7 +17,7 @@ export class ViewToggleMounter {
 
   /**
    *
-   * @param {ViewToggleMounterConfig} viewMounterConfig
+   * @param {ViewToggleMounterConfig|ViewMounterConfig} viewMounterConfig
    * @return {ViewToggleMounter}
    */
   buildView(viewMounterConfig) {

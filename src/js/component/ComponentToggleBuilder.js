@@ -3,6 +3,8 @@ import {assert, assertType, isBoolean, isFunction, isNode, isNull, isString} fro
 import {ComponentTogglePublic} from './ComponentTogglePublic'
 import {ComponentToggle} from './ComponentToggle'
 import {isTheme} from '@flexio-oss/js-style-theme-interface'
+import {isViewToggleMounter} from '../views/ViewToggleMounter/ViewToggleMounter'
+import {isToggleHandlerManager} from '../ToggleHandlerManager'
 
 export class ComponentToggleBuilder {
   constructor() {
@@ -112,6 +114,7 @@ export class ComponentToggleBuilder {
    * @returns {ComponentToggleBuilder}
    */
   viewToggleMounter(viewToggleMounter) {
+    assert(isViewToggleMounter(viewToggleMounter), 'ViewToggleMounterConfig:viewToggleMounter: argument should be a ViewToggleMounter')
     this.__viewToggleMounter = viewToggleMounter
     return this
   }
@@ -133,6 +136,7 @@ export class ComponentToggleBuilder {
    * @returns {ComponentToggleBuilder}
    */
   toggleHandlerManager(toggleHandlerManager) {
+    assert(isToggleHandlerManager(toggleHandlerManager), 'ViewToggleMounterConfig:toggleHandlerManager: argument should be a ToggleHandlerManager')
     this.__toggleHandlerManager = toggleHandlerManager
     return this
   }

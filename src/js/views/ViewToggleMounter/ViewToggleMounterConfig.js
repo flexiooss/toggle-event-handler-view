@@ -2,10 +2,14 @@ import {assert, isBoolean, isFunction, isNode, isString} from '@flexio-oss/asser
 import {TypeCheck} from '@flexio-oss/hotballoon'
 import {isTheme} from '@flexio-oss/js-style-theme-interface'
 import {ViewToggle} from '../views/ViewToggle'
+import {ViewMounterConfig} from '@flexio-corp/js-view-common'
 
-
-export class ViewToggleMounterConfig {
+/**
+ * @extends ViewMounterConfig
+ */
+export class ViewToggleMounterConfig extends ViewMounterConfig {
   constructor() {
+    super()
     /**
      *
      * @type {ComponentContext}
