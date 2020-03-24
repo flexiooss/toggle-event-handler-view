@@ -43,7 +43,7 @@ const constructorString = Object.getPrototypeOf(new (viewToggleInterface((class 
 
 /**
  *
- * @param {ViewToggleInterface} inst
+ * @param {View} inst
  * @return {boolean}
  */
 export const implementsViewToggleInterface = (inst) => {

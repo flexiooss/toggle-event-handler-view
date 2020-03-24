@@ -23,6 +23,14 @@ export class ComponentTogglePublic {
   remove() {
     this[__componentToggle].remove()
   }
+
+  title() {
+    return this[__componentToggle].title()
+  }
+
+  content() {
+    return this[__componentToggle].content()
+  }
 }
 
 /**

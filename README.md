@@ -5,26 +5,22 @@
 
 ```javascript
 let component = new ComponentToggleBuilder()
-.application(application)
-.build()
+  .application(application)
+  .parentNode(parentNode)
+  .idPrefix('prefix') // to personalize dom
+  .styles(styles)
+  .toggleHandlerManager(new ToggleHandlerManager())
+  .view(ViewBuilders.viewToggle())
+  .isActive(false)
+  .view(ViewToggleBuilders.viewToggle())
+  .build()
   ```
 
-- build View
-
+### get title and content node
 ```javascript
-const viewContainer = new ViewToggleMounter()
-  .buildView(new ViewToggleMounterConfig()
-      .componentContext(componentContext)
-      .componentToggle(component)
-      .parentNode(parentNode)
-      .idPrefix('prefix') // to personalize dom
-      .styles(styles)
-      .toggleHandlerManager(new ToggleHandlerManager())
-      .view(ViewBuilders.viewToggle())
-      .isActive(false)
-  ).viewContainer()
-  ```
-
+component.title().innerHTML = 'title'
+component.content().innerHTML = 'content'
+```
 
 ### listen when an element is toggled :
 ```javascript

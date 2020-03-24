@@ -47,6 +47,7 @@ export class ViewToggle extends viewToggleInterface(View) {
           this.nodeRef(this.__idArrow).style.transform = 'rotate(0turn)'
         }
       }
+      this.dispatchToggleEvent(this.__toggleDisplayHandler.isActive())
       this.nodeRef(this.__idContent).style.display = (this.__toggleDisplayHandler.isActive() ? 'block' : 'none')
       this.nodeRef(this.__idContent).style.visibility = (this.__toggleDisplayHandler.isActive() ? 'visible' : 'hidden')
     })
@@ -95,7 +96,6 @@ export class ViewToggle extends viewToggleInterface(View) {
               )
               .listenEvent(UIEventBuilder.pointerEvent().up((e) => {
                 this.dispatch('EVENT_TOGGLE', null)
-                this.dispatchToggleEvent(this.__toggleDisplayHandler.isActive())
               }))
           ),
           this.html(

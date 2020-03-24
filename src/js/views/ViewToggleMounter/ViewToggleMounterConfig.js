@@ -1,9 +1,7 @@
-import {isBoolean, isFunction, isNode, isString} from '@flexio-oss/assert'
+import {assert, isBoolean, isFunction, isNode, isString} from '@flexio-oss/assert'
 import {TypeCheck} from '@flexio-oss/hotballoon'
 import {isTheme} from '@flexio-oss/js-style-theme-interface'
-import {isComponentTogglePublic} from '../../component/ComponentTogglePublic'
 import {ViewToggle} from '../views/ViewToggle'
-import {isIconist} from '@flexio-corp/iconist'
 
 
 export class ViewToggleMounterConfig {
@@ -24,10 +22,10 @@ export class ViewToggleMounterConfig {
 
     /**
      *
-     * @type {ComponentTogglePublic}
+     * @type {ActionDispatcher<ElementToggle, ElementToggleBuilder>}
      * @private
      */
-    this.__componentToggle = null
+    this.__actionElementToggled = null
 
     /**
      *
@@ -71,7 +69,7 @@ export class ViewToggleMounterConfig {
    * @return {ViewToggleMounterConfig}
    */
   componentContext(componentContext) {
-    TypeCheck.isComponentContext(componentContext)
+    assert(TypeCheck.isComponentContext(componentContext), 'ViewToggleMounterConfig:parentNode: argument should be a ComponentContext')
     this.__componentContext = componentContext
     return this
   }
@@ -82,19 +80,19 @@ export class ViewToggleMounterConfig {
    * @return {ViewToggleMounterConfig}
    */
   parentNode(parentNode) {
-    isNode(parentNode)
+    assert(isNode(parentNode), 'ViewToggleMounterConfig:parentNode: argument should be a node')
     this.__parentNode = parentNode
     return this
   }
 
   /**
    *
-   * @param {ComponentTogglePublic} componentToggle
+   * @param {ActionDispatcher<ElementToggle, ElementToggleBuilder>}actionElementToggled
    * @returns {ViewToggleMounterConfig}
    */
-  componentToggle(componentToggle) {
-    isComponentTogglePublic(componentToggle)
-    this.__componentToggle = componentToggle
+  actionElementToggled(actionElementToggled) {
+    assert(TypeCheck.isActionDispatcher(actionElementToggled), 'ViewToggleMounterConfig:parentNode: argument should be an ActionDispatcher')
+    this.__actionElementToggled = actionElementToggled
     return this
   }
 
@@ -104,7 +102,8 @@ export class ViewToggleMounterConfig {
    * @returns {ViewToggleMounterConfig}
    */
   styles(styles) {
-    isTheme(styles)
+    assert(isTheme(styles), 'ViewToggleMounterConfig:parentNode: argument should be a Theme')
+
     this.__styles = styles
     return this
   }
@@ -115,7 +114,7 @@ export class ViewToggleMounterConfig {
    * @returns {ViewToggleMounterConfig}
    */
   view(view) {
-    isFunction(view)
+    assert(isFunction(view), 'ViewToggleMounterConfig:parentNode: argument should be a function')
     this.__view = view
     return this
   }
@@ -126,7 +125,7 @@ export class ViewToggleMounterConfig {
    * @returns {ViewToggleMounterConfig}
    */
   idPrefix(idPrefix) {
-    isString(idPrefix)
+    assert(isString(idPrefix), 'ViewToggleMounterConfig:parentNode: argument should be a string')
     this.__idPrefix = idPrefix
     return this
   }
@@ -147,7 +146,7 @@ export class ViewToggleMounterConfig {
    * @returns {ViewToggleMounterConfig}
    */
   isActive(isActive) {
-    isBoolean(isActive)
+    assert(isBoolean(isActive), 'ViewToggleMounterConfig:parentNode: argument should be a boolean')
     this.__isActive = isActive
     return this
   }
@@ -174,7 +173,7 @@ export class ViewToggleMounterConfig {
    * @returns {ActionDispatcher<ElementToggle, ElementToggleBuilder>}
    */
   getActionEventToggled() {
-    return this.__componentToggle.actionElementToggled()
+    return this.__actionElementToggled
   }
 
   /**
