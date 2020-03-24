@@ -82,7 +82,12 @@ export class ViewToggle extends viewToggleInterface(View) {
         .childNodes(
           this.html(
             e(`div#${this.__idTitle}`)
-              .className(this.__styles.layout().row(), this.__styles.layout().rowAlignCenter(), this.__styles.layout().containerSmall())
+              .className(
+                this.__styles.layout().row(),
+                this.__styles.layout().rowAlignCenter(),
+                this.__styles.layout().containerSmall(),
+                this.__styles.elements().clickable()
+              )
               .childNodes(
                 this.html(
                   e(`div#arrowContainer`)
