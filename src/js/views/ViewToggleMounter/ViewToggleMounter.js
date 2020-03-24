@@ -35,8 +35,7 @@ export class ViewToggleMounter extends ViewMounter {
       viewMounterConfig.getView(),
       viewMounterConfig.getActionEventToggled(),
       viewMounterConfig.getIDPrefix(),
-      viewMounterConfig.getToggleHandlerManager(),
-      viewMounterConfig.getIsActive()
+      viewMounterConfig.getStoreToggleState()
   )
 
     assertType(

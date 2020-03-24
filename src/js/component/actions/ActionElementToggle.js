@@ -21,12 +21,27 @@ export class ActionElementToggle {
     assertType(TypeCheck.isDispatcher(dispatcher),
       'ActionDeleteItems:create: `dispatcher` should be a Dispatcher'
     )
-
     return new ActionElementToggle(
       new ActionDispatcherBuilder()
-        .type(globalFlexioImport.io.flexio.toggle_event_handler_view.actions.ElementToggle)
+        .type(globalFlexioImport.io.flexio.toggle_event_handler_view.types.ElementToggle)
         .dispatcher(dispatcher)
         .build()
+    )
+  }
+
+  /**
+   *
+   * @param {ComponentContext} componentContext
+   * @param {Store<ElementToggle, ElementToggleBuilder>} storeToggleState
+   * @returns {ActionElementToggle}
+   */
+  listen(componentContext, storeToggleState) {
+    this.__action.listenWithCallback(
+      (payload) => {
+        console.log('icici')
+        storeToggleState.set(payload)
+      },
+      componentContext
     )
   }
 

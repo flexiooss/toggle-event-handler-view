@@ -1,2 +1,2 @@
 ElementToggle:
-  avtive: bool
+  active: bool

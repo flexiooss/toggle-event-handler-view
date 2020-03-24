@@ -36,6 +36,22 @@ export class ComponentTogglePublic {
   content() {
     return this[__componentToggle].content()
   }
+
+  /**
+   *
+   * @return {boolean}
+   */
+  isActive() {
+    return this[__componentToggle].isActive()
+  }
+
+  open() {
+    this[__componentToggle].open()
+  }
+
+  close() {
+    this[__componentToggle].close()
+  }
 }
 
 /**

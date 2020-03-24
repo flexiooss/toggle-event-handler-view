@@ -22,14 +22,14 @@ export const viewToggleInterface = (Base) => {
     }
 
     /**
-     *
+     * @return {Element}
      */
     title() {
       throw new Error('should be override')
     }
 
     /**
-     *
+     * @return {Element}
      */
     content() {
       throw new Error('should be override')
@@ -43,7 +43,7 @@ const constructorString = Object.getPrototypeOf(new (viewToggleInterface((class 
 
 /**
  *
- * @param {View} inst
+ * @param {ViewToggleInterface} inst
  * @return {boolean}
  */
 export const implementsViewToggleInterface = (inst) => {

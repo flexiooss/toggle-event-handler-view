@@ -40,7 +40,7 @@ export class ViewToggleMounterConfig extends ViewMounterConfig {
 
     /**
      *
-     * @type {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface}
+     * @type {function(ViewToggleBuildersConfig): ViewToggleInterface}
      * @private
      */
     this.__view = null
@@ -54,17 +54,10 @@ export class ViewToggleMounterConfig extends ViewMounterConfig {
 
     /**
      *
-     * @type {ToggleHandlerManager}
+     * @type {PublicStoreHandler<ElementToggle, ElementToggleBuilder>}
      * @private
      */
-    this.__toggleHandlerManager = null
-
-    /**
-     *
-     * @type {boolean}
-     * @private
-     */
-    this.__isActive = false
+    this.__storeToggleState = null
   }
 
   /**
@@ -114,7 +107,7 @@ export class ViewToggleMounterConfig extends ViewMounterConfig {
 
   /**
    *
-   * @param {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface} view
+   * @param {function(ViewToggleBuildersConfig): ViewToggleInterface} view
    * @returns {ViewToggleMounterConfig}
    */
   view(view) {
@@ -136,22 +129,11 @@ export class ViewToggleMounterConfig extends ViewMounterConfig {
 
   /**
    *
-   * @param {ToggleHandlerManager}toggleHandlerManager
+   * @param {PublicStoreHandler<ElementToggle, ElementToggleBuilder>} storeToggleState
    * @returns {ViewToggleMounterConfig}
    */
-  toggleHandlerManager(toggleHandlerManager) {
-    this.__toggleHandlerManager = toggleHandlerManager
-    return this
-  }
-
-  /**
-   *
-   * @param {boolean} isActive
-   * @returns {ViewToggleMounterConfig}
-   */
-  isActive(isActive) {
-    assert(isBoolean(isActive), 'ViewToggleMounterConfig:parentNode: argument should be a boolean')
-    this.__isActive = isActive
+  storeToggleState(storeToggleState) {
+    this.__storeToggleState = storeToggleState
     return this
   }
 
@@ -190,7 +172,7 @@ export class ViewToggleMounterConfig extends ViewMounterConfig {
 
   /**
    *
-   * @returns {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface}
+   * @returns {function(ViewToggleBuildersConfig): ViewToggleInterface}
    */
   getView() {
     return this.__view
@@ -206,27 +188,9 @@ export class ViewToggleMounterConfig extends ViewMounterConfig {
 
   /**
    *
-   * @returns {ToggleHandlerManager}
+   * @returns {PublicStoreHandler<ElementToggle, ElementToggleBuilder>}
    */
-  getToggleHandlerManager() {
-    return this.__toggleHandlerManager
-  }
-
-  /**
-   *
-   * @returns {boolean}
-   */
-  getIsActive() {
-    return this.__isActive
-  }
-}
-
-export class ViewToggleBuilders {
-  /**
-   *
-   * @returns {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface}
-   */
-  static viewToggle() {
-    return (viewContainer, styles, idPrefix, toggleHandlerManager, isActive) => new ViewToggle(viewContainer, styles, idPrefix, toggleHandlerManager, isActive)
+  getStoreToggleState() {
+    return this.__storeToggleState
   }
 }

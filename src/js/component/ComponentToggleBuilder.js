@@ -4,7 +4,6 @@ import {ComponentTogglePublic} from './ComponentTogglePublic'
 import {ComponentToggle} from './ComponentToggle'
 import {isTheme} from '@flexio-oss/js-style-theme-interface'
 import {isViewToggleMounter} from '../views/ViewToggleMounter/ViewToggleMounter'
-import {isToggleHandlerManager} from '../ToggleHandlerManager'
 
 export class ComponentToggleBuilder {
   constructor() {
@@ -31,7 +30,7 @@ export class ComponentToggleBuilder {
 
     /**
      *
-     * @type {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface}
+     * @type {function(ViewToggleBuildersConfig): ViewToggleInterface}
      */
     this.__view = null
 
@@ -41,13 +40,6 @@ export class ComponentToggleBuilder {
      * @private
      */
     this.__idPrefix = ''
-
-    /**
-     *
-     * @type {ToggleHandlerManager}
-     * @private
-     */
-    this.__toggleHandlerManager = null
 
     /**
      *
@@ -99,7 +91,7 @@ export class ComponentToggleBuilder {
 
   /**
    *
-   * @param {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface} view
+   * @param {function(ViewToggleBuildersConfig): ViewToggleInterface} view
    * @returns {ComponentToggleBuilder}
    */
   view(view) {
@@ -132,17 +124,6 @@ export class ComponentToggleBuilder {
 
   /**
    *
-   * @param {ToggleHandlerManager}toggleHandlerManager
-   * @returns {ComponentToggleBuilder}
-   */
-  toggleHandlerManager(toggleHandlerManager) {
-    assert(isToggleHandlerManager(toggleHandlerManager), 'ViewToggleMounterConfig:toggleHandlerManager: argument should be a ToggleHandlerManager')
-    this.__toggleHandlerManager = toggleHandlerManager
-    return this
-  }
-
-  /**
-   *
    * @param {boolean} isActive
    * @returns {ComponentToggleBuilder}
    */
@@ -164,7 +145,6 @@ export class ComponentToggleBuilder {
         this.__styles,
         this.__viewToggleMounter,
         this.__idPrefix,
-        this.__toggleHandlerManager,
         this.__view,
         this.__isActive
       )

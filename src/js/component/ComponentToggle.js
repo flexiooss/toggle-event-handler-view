@@ -1,6 +1,7 @@
 import '../../../generated/io/package'
 import {ActionElementToggle} from './actions/ActionElementToggle'
 import {ViewToggleMounterConfig} from '../views/ViewToggleMounter/ViewToggleMounterConfig'
+import {StoreToggleState} from './stores/StoreToggleState'
 
 export class ComponentToggle {
   /**
@@ -10,21 +11,21 @@ export class ComponentToggle {
    * @param {ThemeStyle} styles
    * @param {ViewToggleMounter} viewToggleMounter
    * @param {string} prefix
-   * @param {ToggleHandlerManager} toggleHandlerManager
-   * @param {function(ViewContainer, ThemeStyle, string, ToggleHandlerManager, boolean): ViewToggleInterface} view
+   * @param {function(ViewToggleBuildersConfig): ViewToggleInterface} view
    * @param {boolean} isActive
    */
-  constructor(componentContext, parentNode, styles, viewToggleMounter, prefix, toggleHandlerManager, view, isActive) {
+  constructor(componentContext, parentNode, styles, viewToggleMounter, prefix, view, isActive) {
     this.__componentContext = componentContext
     this.__parentNode = parentNode
     this.__styles = styles
     this.__viewToggleMounter = viewToggleMounter
     this.__prefix = prefix
-    this.__toggleHandlerManager = toggleHandlerManager
     this.__view = view
     this.__isActive = isActive
 
+    this.__storeToggleState = StoreToggleState.create(this.__componentContext, this.__isActive)
     this.__actionElementToggled = ActionElementToggle.create(this.__componentContext.dispatcher())
+    this.__actionElementToggled.listen(this.__componentContext, this.__storeToggleState.store())
 
     this.__mountView()
   }
@@ -36,9 +37,8 @@ export class ComponentToggle {
         .idPrefix(this.__prefix)
         .styles(this.__styles)
         .actionElementToggled(this.__actionElementToggled.action())
-        .toggleHandlerManager(this.__toggleHandlerManager)
+        .storeToggleState(this.__storeToggleState.storePublic())
         .view(this.__view)
-        .isActive(this.__isActive)
       ).viewContainer()
     this.__componentContext.addViewContainer(this.__viewContainer)
   }
@@ -55,6 +55,22 @@ export class ComponentToggle {
    */
   content() {
     return this.__viewContainer.content()
+  }
+
+  /**
+   *
+   * @return {boolean}
+   */
+  isActive() {
+    return this.__storeToggleState.store().state().data().active()
+  }
+
+  open() {
+    this.__actionElementToggled.action().dispatch(this.__actionElementToggled.action().payloadBuilder().active(true).build())
+  }
+
+  close() {
+    this.__actionElementToggled.action().dispatch(this.__actionElementToggled.action().payloadBuilder().active(false).build())
   }
 
   /**

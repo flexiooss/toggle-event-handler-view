@@ -1,34 +1,35 @@
 import {assertType} from '@flexio-oss/assert'
-import {ToggleDisplayHandler} from './ToggleDisplayHandler'
+import {ComponentTogglePublic} from './component/ComponentTogglePublic'
+import {BooleanArray} from '../../../../js-api-client-parent/flex-types'
 
 export class ToggleHandlerManager {
   constructor() {
     /**
      *
-     * @type {Array<ToggleDisplayHandler>}
+     * @type {Array<ComponentTogglePublic>}
      * @private
      */
-    this.__handlerRegister = []
+    this.__componentToggleRegister = []
   }
 
   /**
    *
-   * @param {ToggleDisplayHandler} handler
+   * @param {ComponentTogglePublic} componentToggle
    */
-  addToggleHandler(handler) {
-    assertType(handler instanceof ToggleDisplayHandler,
-      'ToggleHandlerManager.openAll: context should be an instance of ViewContainerBase'
+  addComponentToggle(componentToggle) {
+    assertType(componentToggle instanceof ComponentTogglePublic,
+      'ToggleHandlerManager.componentToggle: context should be an instance of ComponentTogglePublic'
     )
-    this.__handlerRegister.push(handler)
+    this.__componentToggleRegister.push(componentToggle)
   }
 
   /**
    *
    */
   openAll() {
-    this.__handlerRegister.forEach((handler) => {
-      if (!handler.isActive()) {
-        handler.open()
+    this.__componentToggleRegister.forEach((component) => {
+      if (!component.isActive()) {
+        component.open()
       }
     })
   }
@@ -37,52 +38,48 @@ export class ToggleHandlerManager {
    *
    */
   closeAll() {
-    this.__handlerRegister.forEach((handler) => {
-      handler.close()
+    this.__componentToggleRegister.forEach((component) => {
+      if (component.isActive()) {
+        component.close()
+      }
     })
   }
 
   /**
    *
-   * @param {ToggleDisplayHandler} exclusiveHandler
+   * @param {int} id
    */
-  openExclusive(exclusiveHandler) {
-    assertType(exclusiveHandler instanceof ToggleDisplayHandler,
-      'ToggleHandlerManager.openExclusive: context should be an instance of ViewContainerBase'
-    )
-    this.__handlerRegister.forEach((handler) => {
-      if (handler.isActive()) {
-        handler.close()
+  openExclusive(id) {
+    this.__componentToggleRegister.forEach((component) => {
+      if (component.isActive()) {
+        component.close()
       }
     })
-    exclusiveHandler.open()
+    this.__componentToggleRegister[id].open()
   }
 
   /**
    *
-   * @param {ToggleDisplayHandler} exclusiveHandler
+   * @param {int} id
    */
-  closeExclusive(exclusiveHandler) {
-    assertType(exclusiveHandler instanceof ToggleDisplayHandler,
-      'ToggleHandlerManager.openExclusive: context should be an instance of ViewContainerBase'
-    )
-    this.__handlerRegister.forEach((handler) => {
-      if (!handler.isActive()) {
-        handler.open()
+  closeExclusive(id) {
+    this.__componentToggleRegister.forEach((component) => {
+      if (!component.isActive()) {
+        component.open()
       }
     })
-    exclusiveHandler.close()
+    this.__componentToggleRegister[id].close()
   }
 
   /**
    *
    */
   toggleAll() {
-    this.__handlerRegister.forEach((handler) => {
-      if (handler.isActive()) {
-        handler.close()
+    this.__componentToggleRegister.forEach((component) => {
+      if (component.isActive()) {
+        component.close()
       } else {
-        handler.open()
+        component.open()
       }
     })
   }
@@ -92,8 +89,8 @@ export class ToggleHandlerManager {
    */
   toggleAllUniformly() {
     let display = false
-    this.__handlerRegister.forEach((handler) => {
-      if (handler.isActive()) {
+    this.__componentToggleRegister.forEach((component) => {
+      if (component.isActive()) {
         display = true
       }
     })
@@ -102,6 +99,20 @@ export class ToggleHandlerManager {
     } else {
       this.openAll()
     }
+  }
+
+  getState() {
+    let result = new BooleanArray()
+
+    this.__componentToggleRegister.forEach((component) => {
+      result.push(component.isActive())
+    })
+
+    return result
+  }
+
+  remove() {
+    this.__componentToggleRegister = null
   }
 }
 

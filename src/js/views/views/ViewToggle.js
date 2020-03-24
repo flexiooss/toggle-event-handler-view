@@ -1,8 +1,6 @@
 import {e, View, UIEventBuilder, RECONCILIATION_RULES} from '@flexio-oss/hotballoon'
 import {viewToggleInterface} from './ViewToggleInterface'
-import {ToggleDisplayHandler} from '../../ToggleDisplayHandler'
 import {ToggleEvent} from './ToggleEvent'
-import {assertType, isBoolean, isUndefined} from '@flexio-oss/assert'
 
 
 /**
@@ -10,35 +8,22 @@ import {assertType, isBoolean, isUndefined} from '@flexio-oss/assert'
  */
 export class ViewToggle extends viewToggleInterface(View) {
   /**
-   * @param {ViewContainer} viewContainer
-   * @param {ThemeStyle} styles
-   * @param {string} idPrefix
-   * @param {ToggleHandlerManager} toggleHandlerManager
-   * @param {boolean} isActive
+   * @param {ViewToggleBuildersConfig} viewToggleBuildersConfig
    */
-  constructor(viewContainer, styles, idPrefix, toggleHandlerManager, isActive) {
-    super(viewContainer)
-    this.setSynchronous()
-    this.__idPrefix = idPrefix
-    this.__toggleHandlerManager = toggleHandlerManager
-    this.__styles = styles
+  constructor(viewToggleBuildersConfig) {
+    super(viewToggleBuildersConfig.viewContainer())
+    this.__idPrefix = viewToggleBuildersConfig.idPrefix()
+    this.__styles = viewToggleBuildersConfig.styles()
+    this.__storeToggleState = viewToggleBuildersConfig.storeToggleState()
     this.__idTitle = `${this.__idPrefix}-title`
     this.__idTitleContent = `${this.__idTitle}-content`
     this.__idContent = `${this.__idPrefix}-content`
     this.__idArrow = `arrow-${this.__idPrefix}`
-    this.__toggleDisplayHandler = new ToggleDisplayHandler(isActive)
-      .addEventToggle((a) => { this._on(a) })
-
-    this.__iconArrowContainer = this.html(
-      e(`span#${this.__idArrow}`)
-        .reconciliationRules(RECONCILIATION_RULES.BYPASS_CHILDREN)
-        .styles({transition: '300ms ease all', transformOrigin: 'center'})
-        .bindStyle('transform', this.__toggleDisplayHandler.isActive(), 'rotate(0.25turn)')
-    )
 
     this.__currentIsActive = this.__isActive
-    this.__toggleDisplayHandler.subscribeToEventToggled((payload) => {
-      if (payload) {
+    this.subscribeToStore(this.__storeToggleState, (payload) => {
+      if (payload.data().active()) {
+        console.log(payload.data().active())
         if (!this.__currentIsActive) {
           this.nodeRef(this.__idArrow).style.transform = 'rotate(0.25turn)'
         }
@@ -47,11 +32,9 @@ export class ViewToggle extends viewToggleInterface(View) {
           this.nodeRef(this.__idArrow).style.transform = 'rotate(0turn)'
         }
       }
-      this.dispatchToggleEvent(this.__toggleDisplayHandler.isActive())
-      this.nodeRef(this.__idContent).style.display = (this.__toggleDisplayHandler.isActive() ? 'block' : 'none')
-      this.nodeRef(this.__idContent).style.visibility = (this.__toggleDisplayHandler.isActive() ? 'visible' : 'hidden')
+      this.nodeRef(this.__idContent).style.display = (payload.data().active() ? 'block' : 'none')
+      this.nodeRef(this.__idContent).style.visibility = (payload.data().active() ? 'visible' : 'hidden')
     })
-    this.__toggleHandlerManager.addToggleHandler(this.__toggleDisplayHandler)
   }
 
   /**
@@ -61,18 +44,6 @@ export class ViewToggle extends viewToggleInterface(View) {
     return new ToggleEvent(a => {
       return this._on(a)
     })
-  }
-
-  dispatchToggleEvent(value) {
-    assertType(
-      !isUndefined(value) && isBoolean(value),
-      'ViewPagination:dispatchChange: `value` should not be undefined of type number'
-    )
-
-    this.dispatch(
-      ToggleEvent.TOGGLE(),
-      value
-    )
   }
 
   template() {
@@ -92,7 +63,14 @@ export class ViewToggle extends viewToggleInterface(View) {
                 this.html(
                   e(`div#arrowContainer`)
                     .className(this.__styles.layout().mobileWidth().w1())
-                    .childNodes(this.__styles.icons().applyTo(this.__iconArrowContainer).triangle().small().dark())
+                    .childNodes(this.__styles.icons().applyTo(
+                      this.html(
+                        e(`span#${this.__idArrow}`)
+                          .reconciliationRules(RECONCILIATION_RULES.BYPASS_CHILDREN)
+                          .styles({transition: '300ms ease all', transformOrigin: 'center'})
+                          .bindStyle('transform', this.__storeToggleState.data().active(), 'rotate(0.25turn)')
+                      )
+                    ).triangle().small().dark())
                 ),
                 this.html(
                   e(`div#${this.__idTitleContent}`)
@@ -100,7 +78,7 @@ export class ViewToggle extends viewToggleInterface(View) {
                 )
               )
               .listenEvent(UIEventBuilder.pointerEvent().up((e) => {
-                this.dispatch('EVENT_TOGGLE', null)
+                this.dispatch(ToggleEvent.TOGGLE(), !this.__storeToggleState.data().active())
               }))
           ),
           this.html(
@@ -114,10 +92,10 @@ export class ViewToggle extends viewToggleInterface(View) {
                 this.html(
                   e(`div#${this.__idContent}`)
                     .className(this.__styles.layout().column(), this.__styles.layout().desktopWidth().w23(), this.__styles.layout().tabletWidth().w23(), this.__styles.layout().mobileWidth().w23())
-                    .properties({ariaHidden: this.__toggleDisplayHandler.isActive()})
+                    .properties({ariaHidden: this.__storeToggleState.data().active()})
                     .styles({
-                      display: (this.__toggleDisplayHandler.isActive() ? 'block' : 'none'),
-                      visibility: (this.__toggleDisplayHandler.isActive() ? 'visible' : 'hidden')
+                      display: (this.__storeToggleState.data().active() ? 'block' : 'none'),
+                      visibility: (this.__storeToggleState.data().active() ? 'visible' : 'hidden')
                     })
                 )
               )

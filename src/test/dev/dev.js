@@ -1,7 +1,7 @@
 import {ApplicationWithStyleAndLayers} from '@flexio-oss/hotballoon-test-dummies/src/js/ApplicationWithStyleAndLayers'
 import {ToggleHandlerManager} from '../../js/ToggleHandlerManager'
 import {ComponentToggleBuilder} from '../../js/component/ComponentToggleBuilder'
-import {ViewToggleBuilders} from '../../js/views/ViewToggleMounter/ViewToggleMounterConfig'
+import {ViewToggleBuilders} from '../../js/views/ViewToggleMounter/ViewToggleBuilders'
 import {ViewToggleMounter} from '../../..'
 
 const viewLogOptions = {
@@ -20,7 +20,6 @@ let component = new ComponentToggleBuilder()
   .parentNode(parentNode)
   .idPrefix('prefix')
   .styles(applicationDev.styles())
-  .toggleHandlerManager(toggleHandlerManager)
   .view(ViewToggleBuilders.viewToggle())
   .isActive(false)
   .build()
@@ -31,7 +30,6 @@ let component2 = new ComponentToggleBuilder()
   .parentNode(parentNode)
   .idPrefix('prefix2')
   .styles(applicationDev.styles())
-  .toggleHandlerManager(toggleHandlerManager)
   .view(ViewToggleBuilders.viewToggle())
   .isActive(false)
   .build()
@@ -39,7 +37,7 @@ let component2 = new ComponentToggleBuilder()
 component.actionElementToggled().listenWithCallback((e) => {
   componentContext.logger().log(
     componentContext.logger().builder()
-      .info().pushLog(`element 1 is open : ${e.avtive()}`),
+      .info().pushLog(`element 1 is open : ${e.active()}`),
     viewLogOptions
   )
 }, componentContext)
@@ -47,7 +45,7 @@ component.actionElementToggled().listenWithCallback((e) => {
 component2.actionElementToggled().listenWithCallback((e) => {
   componentContext.logger().log(
     componentContext.logger().builder()
-      .info().pushLog(`element 2 is open : ${e.avtive()}`),
+      .info().pushLog(`element 2 is open : ${e.active()}`),
     viewLogOptions
   )
 }, componentContext)
@@ -58,9 +56,12 @@ component.content().innerHTML = 'content'
 component2.title().innerHTML = 'title2'
 component2.content().innerHTML = 'content2'
 
+toggleHandlerManager.addComponentToggle(component)
+toggleHandlerManager.addComponentToggle(component2)
+
 let openAll = document.createElement('button')
 openAll.textContent = 'open all'
-openAll.addEventListener('click', (e) => {
+openAll.addEventListener('click', () => {
   toggleHandlerManager.openAll()
 })
 
@@ -68,7 +69,7 @@ parentNode.appendChild(openAll)
 
 let closeAll = document.createElement('button')
 closeAll.textContent = 'close all'
-closeAll.addEventListener('click', (e) => {
+closeAll.addEventListener('click', () => {
   toggleHandlerManager.closeAll()
 })
 
@@ -76,7 +77,7 @@ parentNode.appendChild(closeAll)
 
 let toggleAll = document.createElement('button')
 toggleAll.textContent = 'toggle all'
-toggleAll.addEventListener('click', (e) => {
+toggleAll.addEventListener('click', () => {
   toggleHandlerManager.toggleAll()
 })
 
