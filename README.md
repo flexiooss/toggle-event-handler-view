@@ -9,10 +9,9 @@ let component = new ComponentToggleBuilder()
   .parentNode(parentNode)
   .idPrefix('prefix') // to personalize dom
   .styles(styles)
-  .toggleHandlerManager(new ToggleHandlerManager())
-  .view(ViewBuilders.viewToggle())
   .isActive(false)
   .view(ViewToggleBuilders.viewToggle())
+  .viewToggleMounter(new ViewToggleMounter())
   .build()
   ```
 
