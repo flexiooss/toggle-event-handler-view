@@ -1,6 +1,6 @@
 import {assertType} from '@flexio-oss/assert'
 import {ComponentTogglePublic} from './component/ComponentTogglePublic'
-import {BooleanArray} from '../../../../js-api-client-parent/flex-types'
+import {BooleanArray} from '@flexio-oss/flex-types'
 
 export class ToggleHandlerManager {
   constructor() {
