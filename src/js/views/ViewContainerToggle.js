@@ -48,10 +48,16 @@ export class ViewContainerToggle extends ViewContainer {
       })
   }
 
+  /**
+   * @return {Element}
+   */
   title() {
     return this.__viewToggle.title()
   }
 
+  /**
+   * @return {Element}
+   */
   content() {
     return this.__viewToggle.content()
   }
